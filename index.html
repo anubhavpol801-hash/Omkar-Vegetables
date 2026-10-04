@@ -211,6 +211,152 @@ Fresh • Quality • Affordable
 © 2026 Omkar Vegetables. All rights reserved.
 
 </footer>
+<!-- ONLINE ORDERING -->
+<section id="order" style="padding:30px 15px;background:#ffffff;">
+  <h2 style="text-align:center;color:#16833b;">🛒 Order Vegetables</h2>
+  <p style="text-align:center;">Select your quantity and order directly on WhatsApp.</p>
 
+  <div style="max-width:600px;margin:auto;">
+
+    <div class="order-item">
+      <b>🍅 Tomato</b>
+      <span>₹50</span>
+      <button onclick="changeQty(0,-1)">−</button>
+      <span id="qty0">0</span>
+      <button onclick="changeQty(0,1)">+</button>
+    </div>
+
+    <div class="order-item">
+      <b>🥔 Potato</b>
+      <span>₹30</span>
+      <button onclick="changeQty(1,-1)">−</button>
+      <span id="qty1">0</span>
+      <button onclick="changeQty(1,1)">+</button>
+    </div>
+
+    <div class="order-item">
+      <b>🧅 Onion</b>
+      <span>₹60</span>
+      <button onclick="changeQty(2,-1)">−</button>
+      <span id="qty2">0</span>
+      <button onclick="changeQty(2,1)">+</button>
+    </div>
+
+    <div class="order-item">
+      <b>🌿 Coriander</b>
+      <span>₹30</span>
+      <button onclick="changeQty(3,-1)">−</button>
+      <span id="qty3">0</span>
+      <button onclick="changeQty(3,1)">+</button>
+    </div>
+
+    <div class="order-item">
+      <b>🌿 Methi</b>
+      <span>₹30</span>
+      <button onclick="changeQty(4,-1)">−</button>
+      <span id="qty4">0</span>
+      <button onclick="changeQty(4,1)">+</button>
+    </div>
+
+    <div class="order-item">
+      <b>🥬 Spinach</b>
+      <span>₹30</span>
+      <button onclick="changeQty(5,-1)">−</button>
+      <span id="qty5">0</span>
+      <button onclick="changeQty(5,1)">+</button>
+    </div>
+
+    <h3 style="text-align:center;margin-top:25px;">
+      Total: ₹<span id="total">0</span>
+    </h3>
+
+    <button onclick="sendOrder()"
+      style="display:block;width:100%;padding:15px;background:#25D366;color:white;border:0;border-radius:10px;font-size:18px;font-weight:bold;">
+      🟢 ORDER ON WHATSAPP
+    </button>
+
+  </div>
+</section>
+
+<style>
+.order-item {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:14px;
+  margin:8px 0;
+  background:#f5f5f5;
+  border-radius:10px;
+}
+
+.order-item b {
+  flex:1;
+}
+
+.order-item button {
+  width:35px;
+  height:35px;
+  border:0;
+  border-radius:50%;
+  background:#16833b;
+  color:white;
+  font-size:20px;
+}
+</style>
+
+<script>
+const products = [
+  ["Tomato",50],
+  ["Potato",30],
+  ["Onion",60],
+  ["Coriander",30],
+  ["Methi",30],
+  ["Spinach",30]
+];
+
+let quantities = [0,0,0,0,0,0];
+
+function changeQty(index, amount) {
+  quantities[index] += amount;
+
+  if (quantities[index] < 0) {
+    quantities[index] = 0;
+  }
+
+  document.getElementById("qty" + index).innerText = quantities[index];
+
+  let total = 0;
+
+  quantities.forEach((qty, i) => {
+    total += qty * products[i][1];
+  });
+
+  document.getElementById("total").innerText = total;
+}
+
+function sendOrder() {
+  let message = "Hello Omkar Vegetables! I want to order:%0A%0A";
+  let hasOrder = false;
+  let total = 0;
+
+  quantities.forEach((qty, i) => {
+    if (qty > 0) {
+      message += products[i][0] + " x " + qty + " = ₹" + (qty * products[i][1]) + "%0A";
+      total += qty * products[i][1];
+      hasOrder = true;
+    }
+  });
+
+  if (!hasOrder) {
+    alert("Please select at least one vegetable.");
+    return;
+  }
+
+  message += "%0ATotal: ₹" + total;
+  message += "%0A%0AThank you!";
+
+  window.location.href = "https://wa.me/919702035365?text=" + message;
+}
+</script>
 </body>
 </html>
